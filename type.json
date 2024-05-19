@@ -1,0 +1,26 @@
+[
+  {
+    "title": "world",
+    "description": "hello",
+    "ingradients": [5, 6, 7],
+    "createdAt": "2024-02-16T09:39:26.926Z",
+    "updatedAt": "2024-02-17T04:12:45.710Z",
+    "id": "65cf2d4e519ff57dc228bbf2"
+  },
+  {
+    "title": "Recipe",
+    "description": "world",
+    "ingradients": [2, 3, 4],
+    "createdAt": "2024-02-16T08:12:09.830Z",
+    "updatedAt": "2024-02-16T08:12:09.830Z",
+    "id": "65cf18d9f79f73f8471c6220"
+  },
+  {
+    "title": "hello",
+    "description": "world",
+    "ingradients": [1, 2, 3],
+    "createdAt": "2024-02-16T07:58:55.994Z",
+    "updatedAt": "2024-02-16T07:58:55.994Z",
+    "id": "65cf15bfbbca5a5de1bc8231"
+  }
+]
