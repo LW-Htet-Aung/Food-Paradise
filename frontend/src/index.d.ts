@@ -7,6 +7,7 @@ export type RecipeDateType = {
 };
 
 export type RecipeType = {
+  photo: File | string | null;
   title: string;
   description: string;
   id: string;
