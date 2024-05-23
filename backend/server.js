@@ -11,12 +11,15 @@ const AuthMiddleware = require("./middlewares/authMiddleware");
 const app = express();
 app.use(express.static("public"));
 // mongo
-mongoose.connect(process.env.MONGO_URL).then(() => {
-  console.log("connected to server");
-  app.listen(process.env.PORT, () => {
-    console.log("app is running on localhost:" + process.env.PORT);
-  });
-});
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("connected to server");
+    app.listen(process.env.PORT, () => {
+      console.log("app is running on localhost:" + process.env.PORT);
+    });
+  })
+  .catch((err) => console.log("Network error"));
 
 // middleware
 app.use(
