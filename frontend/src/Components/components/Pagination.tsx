@@ -4,9 +4,8 @@ import ArrowIcon from "../../assets/icons/ArrowIcon"
 
 const Pagination = ({ links, page }: { links: LinkType, page: number }) => {
     if (links?.paginateLinks?.length < 1 && links?.currentPage !== 1) return null
-
     return (
-        <div className="flex items-center justify-end rounded bg-white px-4 py-3 sm:px-6">
+        <div className="flex items-center justify-end rounded bg-white px-4 my-4 py-3 sm:px-6">
             <div className="flex flex-1 justify-between sm:hidden">
                 {links?.prevPage ?
                     <Link to={`?page=${page - 1}`}

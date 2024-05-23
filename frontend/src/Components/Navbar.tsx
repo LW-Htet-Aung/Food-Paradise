@@ -5,8 +5,6 @@ const Navbar = () => {
     const navigate = useNavigate()
     const user = useAuthStore(state => state.user)
     const logout = useAuthStore(state => state.handleLogout)
-
-    console.log(user, 'user')
     const handleLogout = async () => {
         try {
             const res = await axios.post('/api/users/logout');
@@ -19,7 +17,7 @@ const Navbar = () => {
         }
     }
     return (
-        <nav className="px-6 py-4 fixed top-0 left-0 right-0 shadow-sm bg-white flex justify-between items-center">
+        <nav className="px-6 py-4  z-[99] fixed top-0 left-0 right-0 shadow-md bg-white flex justify-between items-center">
             <div>
                 <h1 className="font-semibold text-orange-500 tracking-wide text-2xl"> Foodie Paradise</h1>
             </div>
