@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import RecipeCard from "../Components/RecipeCard";
 import Pagination from "../Components/components/Pagination";
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import axios from '../helpers/axios'
-import { CombineRecipeType } from "..";
+import { CombineRecipeType, RecipeDType } from "..";
 import { isAxiosError } from "axios";
 
 const Home = () => {
-  const [recipe, setRecipe] = useState<CombineRecipeType[]>([])
+  // const [recipe, setRecipe] = useState<CombineRecipeType[]>([])
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
   const navigate = useNavigate()
-
+  const queryClient = useQueryClient()
   const fetchRecipe = async () => {
     try {
       const res = await axios.get(`/api/recipes${page !== 1 ? '?page=' + page : ""}`)
@@ -22,6 +23,7 @@ const Home = () => {
           behavior: "smooth"
         })
       }
+      // setRecipe(res.data)
       return res?.data
     } catch (error) {
       if (isAxiosError(error)) {
@@ -33,9 +35,6 @@ const Home = () => {
     queryKey: ['recipes', page],
     queryFn: fetchRecipe,
   })
-  useEffect(() => {
-    setRecipe(data?.data)
-  }, [data])
 
   const apiRequest = async (id: string) => {
     try {
@@ -51,15 +50,16 @@ const Home = () => {
   const handleDelete = useCallback((id: string) => {
     mutate(id, {
       onSuccess: () => {
-        if (recipe?.length === 1 && page > 1) {
+        queryClient.invalidateQueries({
+          queryKey: ['recipes']
+        })
+        if (data?.recipes?.length === 1 && page > 1) {
           navigate('?page=' + (page - 1))
-        } else {
-          setRecipe((prev) => prev.filter((item) => item?.id !== id))
         }
       }
     })
 
-  }, [mutate, navigate, page, recipe])
+  }, [mutate, navigate, page, data?.recipes, queryClient])
 
   if (isLoading) {
     return <h2>Loading...</h2>
@@ -68,15 +68,18 @@ const Home = () => {
   if (error) {
     return <h2>{error?.message ?? 'Something Went Wrong'}</h2>
   }
+  if (data?.recipes.length < 1) {
+    return <h2>No Recipe To Show</h2>
+  }
   return (
-    <div className="space-y-3" >
-      {recipe?.length > 0 ? recipe?.map((item) => (
-        <RecipeCard handleDelete={handleDelete} key={item?.id} recipe={item} />
-      )) :
-        <h2>No Recipe To Show</h2>
-      }
+    <>
+      <div className="grid md:grid-cols-3 gap-4 grid-cols-1" >
+        {data?.recipes?.map((item: CombineRecipeType) => (
+          <RecipeCard handleDelete={handleDelete} key={item?.id} recipe={item} />
+        ))}
+      </div >
       < Pagination page={page} links={data?.links} />
-    </div >
+    </>
   )
 }
 export default Home
