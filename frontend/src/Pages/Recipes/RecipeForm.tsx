@@ -95,7 +95,7 @@ const RecipeForm = () => {
             <h1 className="text-orange-400 mb-4 text-center text-2xl font-semibold">{id ? 'Update' : 'Create'} Recipe Form</h1>
             <form onSubmit={handleSubmitRecipe} className="rounded space-y-6">
                 <div>
-                    {preview ? <img className="w-full h-[250px] rounded my-2" src={preview === data.photo ? `http://localhost:4000${data.photo}` : preview as string} /> : null}
+                    {preview ? <img className="w-full h-[250px] object-contain rounded my-2" src={preview === data.photo ? `${import.meta.env.VITE_BACKEND_ASSET_URL}${data.photo}` : preview as string} /> : null}
                     <input
                         className="file:mr-4 file:py-2 file:px-4 file:rounded-md
                      file:border-0 file:text-sm file:font-semibold cursor-pointer file:cursor-pointer transition-default

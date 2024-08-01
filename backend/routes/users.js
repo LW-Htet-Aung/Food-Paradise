@@ -3,11 +3,15 @@ const {
   loginController,
   registerController,
   logoutController,
+  tokenController,
 } = require("../controllers/UsersController");
 const router = express.Router();
 const handleErrorMessage = require("../middlewares/handleErrorMessage");
 const { body } = require("express-validator");
 const User = require("../models/User");
+const AuthMiddleware = require("../middlewares/authMiddleware");
+
+router.get("/token", AuthMiddleware, tokenController);
 
 router.post(
   "/login",

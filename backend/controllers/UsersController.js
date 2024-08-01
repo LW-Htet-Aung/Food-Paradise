@@ -1,6 +1,8 @@
 const createToken = require("../helpers/createToken");
 const User = require("../models/User");
-
+const tokenController = async (req, res) => {
+  return res.json(req.user);
+};
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -36,4 +38,9 @@ const logoutController = (req, res) => {
   });
   return res.json({ message: "User logged out" });
 };
-module.exports = { loginController, registerController, logoutController };
+module.exports = {
+  tokenController,
+  loginController,
+  registerController,
+  logoutController,
+};

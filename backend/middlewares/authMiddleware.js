@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 const AuthMiddleware = (req, res, next) => {
   let token = req.cookies.jwt;
   if (token) {
@@ -6,7 +7,12 @@ const AuthMiddleware = (req, res, next) => {
       if (err) {
         return res.status(401).json({ message: "Token Expire or not valid" });
       } else {
-        next();
+        User.findById(decodeValue.id)
+          .select("-password")
+          .then((user) => {
+            req.user = user;
+            next();
+          });
       }
     });
   } else {

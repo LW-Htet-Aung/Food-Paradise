@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import RecipeCard from "../Components/RecipeCard";
 import Pagination from "../Components/components/Pagination";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import axios from '../helpers/axios'
-import { CombineRecipeType, RecipeDType } from "..";
+import { CombineRecipeType } from "..";
 import { isAxiosError } from "axios";
 
 const Home = () => {
-  // const [recipe, setRecipe] = useState<CombineRecipeType[]>([])
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+
   const fetchRecipe = async () => {
     try {
       const res = await axios.get(`/api/recipes${page !== 1 ? '?page=' + page : ""}`)

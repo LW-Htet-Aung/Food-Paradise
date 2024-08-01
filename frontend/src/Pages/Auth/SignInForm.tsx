@@ -24,7 +24,6 @@ const SignInForm = () => {
         }
     });
 
-    console.log(errors)
     return (
         <main className="flex flex-col items-center justify-center  sm:px-4">
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">

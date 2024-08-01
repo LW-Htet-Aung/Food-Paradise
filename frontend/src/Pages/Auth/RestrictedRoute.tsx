@@ -3,6 +3,7 @@ import { useAuthStore } from "../../store/useAuthStore"
 
 const RestrictedRoute = () => {
     const user = useAuthStore(state => state.user)
+
     return (
         !user ? <Outlet /> : <Navigate to="/" />
     )

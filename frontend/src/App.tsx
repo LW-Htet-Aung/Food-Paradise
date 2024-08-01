@@ -1,9 +1,18 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import Navbar from './Components/Navbar'
+import { useAuthStore } from './store/useAuthStore';
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
-
+  const fetchCurrentUser = useAuthStore(state => state.fetchCurrentUser)
+  const { isLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: fetchCurrentUser,
+  });
+  if (isLoading) {
+    return <h1>Loading...</h1>
+  }
   return (
     <>
       <Navbar />
